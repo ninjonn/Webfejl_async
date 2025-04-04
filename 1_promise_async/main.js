@@ -75,3 +75,44 @@ buyApple3(4).then((value) => {
 const res2 = buyApple3(5)
 
 console.log(res2)
+
+
+class Service{
+    #data
+
+    constructor(){
+        this.#data = people
+    }
+
+    Init(){
+        return new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve(this.#data)
+            },2000)
+        })
+    }
+}
+
+class DataViewController{
+    #div
+    constructor(){
+        this.#div = document.createElement('div')
+        this.#div.textContent = 'Loading'
+        document.body.appendChild(this.#div)
+    }
+
+    setContent(array){
+        this.#div.innerHTML = ''
+        for(const element of array){
+            const div = document.createElement('div')
+            div.textContent = element.name
+            this.#div.appendChild(div)
+        }
+    }
+}
+
+const ser = new Service()
+const view = new DataViewController()
+ser.Init().then((value) => {
+    view.setContent(value);
+})
