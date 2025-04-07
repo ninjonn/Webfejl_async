@@ -46,7 +46,7 @@ class Form {
         const conditions = [
             (person) => person.age % 3 === 0 && person.car.color === 'White',
             (person) => person.sex === 'Female' && person.car.type === 'Coupe',
-            (person) => person.name.startsWith('A') && person.car.color === 'Blue',
+            (person) => person.name.startsWith('A') && person.car.type === 'Bus',
             (person) => person.car.color === 'Silver' && person.car.type === 'SUV'
         ];
 
