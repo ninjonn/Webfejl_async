@@ -84,12 +84,32 @@ class Service{
         this.#data = people
     }
 
-    Init(){
-        return new Promise((resolve,reject) => {
+    Init() {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(this.#data)
-            },2000)
-        })
+                resolve(this.#data);
+            }, 2000);
+        });
+    }
+
+    initInvalid() {
+        return new Promise((reject) => {
+            setTimeout(() => {
+                reject('Invalid initialization');
+            }, 2000);
+        });
+    }
+
+    realInit(dbNumber) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (dbNumber < 5) {
+                    resolve('Vannak almák: ' + dbNumber);
+                } else {
+                    reject('Nincsenek elég almák: ' + dbNumber);
+                }
+            }, 2000);
+        });
     }
 }
 
@@ -109,6 +129,10 @@ class DataViewController{
             this.#div.appendChild(div)
         }
     }
+
+    renderError(error) {
+        this.#div.textContent = error;
+    }
 }
 
 const ser = new Service()
@@ -116,3 +140,13 @@ const view = new DataViewController()
 ser.Init().then((value) => {
     view.setContent(value);
 })
+
+ser.initInvalid().catch((error) => {
+    view.renderError(error);
+});
+
+ser.realInit(3).then((value) => {
+    console.log(value);
+}).catch((error) => {
+    view.renderError(error);
+});
